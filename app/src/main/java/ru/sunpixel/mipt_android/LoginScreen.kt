@@ -15,10 +15,8 @@ import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,23 +26,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun LoginView() {
+    val loginViewModel: LoginViewModel = viewModel()
+    val viewState by loginViewModel.viewState.collectAsState()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-
-        var email by remember {
-            mutableStateOf("")
-        }
-
-        var password by remember {
-            mutableStateOf("")
-        }
 
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -52,7 +47,7 @@ fun LoginView() {
             modifier = Modifier
                 .padding(top = 47.dp)
                 .height(203.dp)
-                .width(188.dp)
+                .width(188.dp),
         )
         Text(
             text = stringResource(id = R.string.title),
@@ -78,9 +73,9 @@ fun LoginView() {
         )
 
         TextField(
-            value = email,
+            value = viewState.email,
             onValueChange = {
-                    newText: String -> email = newText
+                    loginViewModel.obtainEvent(LoginEvent.EmailChanged(it))
             },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.Gray,
@@ -100,9 +95,9 @@ fun LoginView() {
         )
 
         TextField(
-            value = password,
+            value = viewState.password,
             onValueChange = {
-                    newText: String -> password = newText
+                    loginViewModel.obtainEvent(LoginEvent.PasswordChanged(it))
             },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.Gray,
@@ -114,6 +109,7 @@ fun LoginView() {
             ),
             placeholder = { Text( text = stringResource(R.string.password_placeholder)) },
             singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
                 .padding(bottom = 87.dp)
                 .border(1.dp, Color.LightGray, RoundedCornerShape(15.dp, 15.dp, 15.dp, 15.dp))
