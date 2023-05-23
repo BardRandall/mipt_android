@@ -1,4 +1,4 @@
-package ru.sunpixel.mipt_android
+package ru.sunpixel.mipt_android.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.sunpixel.mipt_android.R
 
 @Composable
 fun LoginView() {

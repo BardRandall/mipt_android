@@ -1,4 +1,4 @@
-package ru.sunpixel.mipt_android
+package ru.sunpixel.mipt_android.screen
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

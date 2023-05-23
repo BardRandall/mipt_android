@@ -9,8 +9,12 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import dagger.hilt.android.AndroidEntryPoint
+import ru.sunpixel.mipt_android.screen.LoginView
+import ru.sunpixel.mipt_android.screen.RestaurantView
 import ru.sunpixel.mipt_android.ui.theme.Mipt_androidTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    LoginView()
+                    RestaurantView()
                 }
             }
         }

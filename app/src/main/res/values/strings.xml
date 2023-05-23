@@ -9,4 +9,7 @@
     <string name="password_placeholder">Password</string>
     <string name="forgot_password_btn">Forgot Your Password?</string>
     <string name="login_btn">Login</string>
+
+    <string name="nearest_restaurant">Nearest restaurants</string>
+    <string name="popular_restaurant">Popular restaurants</string>
 </resources>
