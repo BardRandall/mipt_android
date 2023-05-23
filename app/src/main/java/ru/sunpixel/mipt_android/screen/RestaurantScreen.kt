@@ -1,6 +1,5 @@
 package ru.sunpixel.mipt_android.screen
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,15 +10,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,7 +32,8 @@ import ru.sunpixel.mipt_android.ui.theme.Mipt_androidTheme
 @Composable
 fun RestaurantView() {
     val restaurantViewModel: RestaurantViewModel = viewModel()
-    val restaurantViewState by restaurantViewModel.viewState.collectAsState()
+    val state by restaurantViewModel.viewState.observeAsState()
+    val restaurantViewState = state ?: return
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(

@@ -1,10 +1,14 @@
 package ru.sunpixel.mipt_android.screen
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.sunpixel.mipt_android.data.RemoteRestaurant
 import ru.sunpixel.mipt_android.data.RestaurantRepository
@@ -21,22 +25,25 @@ data class RestaurantViewState(
 
 @HiltViewModel
 class RestaurantViewModel @Inject constructor(private val repository: RestaurantRepository): ViewModel() {
-    private val _viewState = MutableStateFlow(RestaurantViewState())
-    val viewState: StateFlow<RestaurantViewState> = _viewState;
+    private val _viewState = MutableLiveData(RestaurantViewState())
+    val viewState: LiveData<RestaurantViewState> = _viewState;
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             fetchRestaurants()
         }
     }
 
 
     private suspend fun fetchRestaurants() {
-        val response = repository.fetchCatalog()
-        _viewState.value = _viewState.value.copy(
-            nearest = response.nearest,
-            popular = response.popular
+        repository.fetchCatalog().collectLatest {
+                response -> _viewState.postValue(
+            _viewState.value?.copy(
+                nearest = response.nearest,
+                popular = response.popular
+            )
         )
+        }
     }
 
 }
