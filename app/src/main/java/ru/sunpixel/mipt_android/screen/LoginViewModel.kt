@@ -1,6 +1,7 @@
 package ru.sunpixel.mipt_android.screen
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -20,12 +21,12 @@ class LoginViewModel : ViewModel() {
     private val _viewState = MutableStateFlow(LoginViewState())
     val viewState: StateFlow<LoginViewState> = _viewState;
 
-    fun obtainEvent(event: LoginEvent) {
+    fun obtainEvent(event: LoginEvent, navController: NavController) {
         when(event) {
             is LoginEvent.EmailChanged -> emailChanged(event.value)
             is LoginEvent.PasswordChanged -> passwordChanged(event.value)
             LoginEvent.ForgotPasswordClicked -> performForgotPassword()
-            LoginEvent.LoginClicked -> performLogin()
+            LoginEvent.LoginClicked -> performLogin(navController)
         }
     }
 
@@ -41,8 +42,8 @@ class LoginViewModel : ViewModel() {
 
     }
 
-    private fun performLogin() {
-
+    private fun performLogin(navController: NavController) {
+        navController.navigate("restaurants")
     }
 
 }

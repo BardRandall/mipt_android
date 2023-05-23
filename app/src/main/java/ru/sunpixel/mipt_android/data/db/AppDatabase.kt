@@ -1,4 +1,4 @@
-package ru.sunpixel.mipt_android.data
+package ru.sunpixel.mipt_android.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.sunpixel.mipt_android.data.AppDatabase
-import ru.sunpixel.mipt_android.data.RestaurantDao
+import ru.sunpixel.mipt_android.data.db.AppDatabase
+import ru.sunpixel.mipt_android.data.db.RestaurantDao
 
 @Module
 @InstallIn(SingletonComponent::class)

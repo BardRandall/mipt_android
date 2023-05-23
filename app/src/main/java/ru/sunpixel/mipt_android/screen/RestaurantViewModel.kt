@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ import ru.sunpixel.mipt_android.data.RestaurantRepository
 import javax.inject.Inject
 
 sealed class RestaurantEvent {
-    object FetchRestaurants: RestaurantEvent()
+    data class RestaurantClicked(val name: String): RestaurantEvent()
 }
 
 data class RestaurantViewState(
@@ -34,6 +35,11 @@ class RestaurantViewModel @Inject constructor(private val repository: Restaurant
         }
     }
 
+    fun obtainEvent(event: RestaurantEvent, navController: NavController) {
+        when(event) {
+            is RestaurantEvent.RestaurantClicked -> performRestaurantClicked(event.name, navController)
+        }
+    }
 
     private suspend fun fetchRestaurants() {
         repository.fetchCatalog().collectLatest {
@@ -44,6 +50,10 @@ class RestaurantViewModel @Inject constructor(private val repository: Restaurant
             )
         )
         }
+    }
+
+    private fun performRestaurantClicked(name: String, navController: NavController) {
+        navController.navigate("detail/${name}")
     }
 
 }

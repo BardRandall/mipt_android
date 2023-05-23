@@ -6,6 +6,10 @@ import io.ktor.client.request.request
 import io.ktor.http.HttpMethod
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.sunpixel.mipt_android.data.db.RestaurantDao
+import ru.sunpixel.mipt_android.data.db.mapToNearestRestaurantEntity
+import ru.sunpixel.mipt_android.data.db.mapToPopularRestaurantEntity
+import ru.sunpixel.mipt_android.data.db.mapToRemoteRestaurant
 import javax.inject.Inject
 
 class RestaurantRepository @Inject constructor(

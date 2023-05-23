@@ -30,11 +30,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import ru.sunpixel.mipt_android.R
 
 @Composable
-fun LoginView() {
-    val loginViewModel: LoginViewModel = viewModel()
+fun LoginView(loginViewModel: LoginViewModel, navController: NavController) {
     val viewState by loginViewModel.viewState.collectAsState()
 
     Column(
@@ -76,7 +76,7 @@ fun LoginView() {
         TextField(
             value = viewState.email,
             onValueChange = {
-                    loginViewModel.obtainEvent(LoginEvent.EmailChanged(it))
+                    loginViewModel.obtainEvent(LoginEvent.EmailChanged(it), navController)
             },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.Gray,
@@ -98,7 +98,7 @@ fun LoginView() {
         TextField(
             value = viewState.password,
             onValueChange = {
-                    loginViewModel.obtainEvent(LoginEvent.PasswordChanged(it))
+                    loginViewModel.obtainEvent(LoginEvent.PasswordChanged(it), navController)
             },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.Gray,
@@ -119,7 +119,7 @@ fun LoginView() {
         )
 
         TextButton(
-            onClick = {},
+            onClick = {loginViewModel.obtainEvent(LoginEvent.ForgotPasswordClicked, navController)},
             modifier = Modifier.padding(bottom = 20.dp)
         ) {
             Text(
@@ -132,7 +132,7 @@ fun LoginView() {
         }
 
         Button(
-            onClick = {},
+            onClick = { loginViewModel.obtainEvent(LoginEvent.LoginClicked, navController) },
             shape = RoundedCornerShape(15.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.light_green)),
             modifier = Modifier
